@@ -5,7 +5,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 
 export default function App() {
 
-  const [mensagem, setMensagem] = useState("Bem-vindo ao React Native!");
+  const [mensagem, setMensagem] = useState("Posso entrar?");
 
   function mudarMensagem(){
     setMensagem("Querido entre!")
@@ -15,7 +15,7 @@ export default function App() {
     <View style={styles.container}>
 
       <Text style={styles.titulo}>
-        Meu Primeiro App React Native
+        Meu Primeiro App 
       </Text>
 
       <Text style={styles.texto}>
