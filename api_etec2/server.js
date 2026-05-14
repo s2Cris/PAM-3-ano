@@ -22,10 +22,62 @@ app.get('/usuarios', (req, res) => {
         {
             id: 2, 
             nome: 'Billie'
-        }
+        },
+
     ];
 
     res.json(usuarios);
+})
+
+app.get('/idade', (req, res) => {
+    const idade = [
+        {
+            id: 1,
+            idade: 18
+        },
+
+        {
+            id: 2, 
+            idade: 20
+        },
+
+    ];
+
+    res.json(idade);
+})
+
+app.get('/email', (req, res) => {
+    const email = [
+        {
+            id: 1,
+            email: 'tia@example.com'
+        },
+
+        {
+            id: 2, 
+            email: 'billie@example.com'
+        },
+
+    ];
+
+    res.json(email);
+})
+
+app.get('/cidade', (req, res) => {
+    const cidade = [
+        {
+            id: 1,
+            cidade: 'São Paulo'
+        },
+
+        {
+            id: 2, 
+            nome: 'Billie'
+        },
+
+    ];
+
+    res.json(cidade);
 })
 
 // inicia servidor
