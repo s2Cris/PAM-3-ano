@@ -80,6 +80,70 @@ app.get('/cidade', (req, res) => {
     res.json(cidade);
 })
 
+app.get('/produtos', (req, res) => {
+    const produtos = [
+        {
+            id: 1,
+            nome: 'Leite'
+        },
+
+        {
+            id: 2, 
+            nome: 'Pão'
+        }
+    ];
+
+    res.json(produtos);
+})
+
+app.get('/filmes', (req, res) => {
+    const filmes = [
+        {
+            id: 1,
+            nome: 'Backrooms'
+        },
+
+        {
+            id: 2, 
+            nome: 'Hit Me Hard and Soft Tour'
+        }
+    ];
+
+    res.json(filmes);
+})
+
+app.get('/celulares', (req, res) => {
+    const celulares = [
+        {
+            id: 1,
+            nome: 'Xiomi 15T Pro'
+        },
+
+        {
+            id: 2, 
+            nome: 'Galaxy S24 Ultra'
+        }
+    ];
+
+    res.json(celulares);
+})
+
+app.get('/jogos', (req, res) => {
+    const jogos = [
+        {
+            id: 1,
+            nome: 'Life is Strange'
+        },
+
+        {
+            id: 2, 
+            nome: 'Mobile Legends: Bang Bang'
+        }
+    ];
+
+    res.json(jogos);
+})
+
 // inicia servidor
 app.listen(3000, () => {    
 

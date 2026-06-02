@@ -4,13 +4,27 @@ const express = require('express');
 const mysql = require('mysql2');
 const app = express ();
 
+// app.use(cors());
+
 app.use(express.json());
 
 const conexao = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'admin',
+    password: '',
     database: 'etec_api'
+});
+
+conexao.connect((erro) => {
+
+    if (erro) {
+
+        console.log('Erro ao conectar');
+
+        return;
+    }
+
+    console.log('MySQL conectado');
 })
 
 // cria rota GET
@@ -23,88 +37,63 @@ app.get("/", (req, res) => {
 });
 
 app.get('/usuarios', (req, res) => {
-    const usuarios = [
-        {
-            id: 1,
-            nome: 'Tia'
-        },
 
-        {
-            id: 2, 
-            nome: 'Billie'
+    const sql = 'SELECT * FROM usuarios';
+    
+    conexao.query(sql, (erro, resultado)=> {
+        
+        if(erro) {
+            console.log(erro);
+
+            return;
         }
-    ];
+        
+        res.json(resultado);
 
-    res.json(usuarios);
+    })
+
 })
 
-app.get('/produtos', (req, res) => {
-    const produtos = [
-        {
-            id: 1,
-            nome: 'Leite'
-        },
+app.post('/usuarios', (req, res) => {
 
-        {
-            id: 2, 
-            nome: 'Pão'
+    const nome = req.body.nome;
+    const idade = req.body.idade;
+    const email = req.body.email;
+    const cidade = req.body.cidade;
+
+    const sql =`
+        INSERT INTO usuarios
+        (nome, idade, email, cidade)
+        VALUES (?, ?, ?, ?)
+    `;
+
+    conexao.query(
+
+        sql,
+
+        [nome, idade, email, cidade],
+
+        (erro, resultado) => {
+
+            if(erro){
+                console.log(erro);
+                return;
+
+                res.json({
+                    mensagem: 'Usuário cadastrado com sucesso'
+                });
+
+            }
+            
         }
-    ];
 
-    res.json(produtos);
-})
+    );
 
-app.get('/filmes', (req, res) => {
-    const filmes = [
-        {
-            id: 1,
-            nome: 'Backrooms'
-        },
-
-        {
-            id: 2, 
-            nome: 'Hit Me Hard and Soft Tour'
-        }
-    ];
-
-    res.json(filmes);
-})
-
-app.get('/celulares', (req, res) => {
-    const celulares = [
-        {
-            id: 1,
-            nome: 'Xiomi 15T Pro'
-        },
-
-        {
-            id: 2, 
-            nome: 'Galaxy S24 Ultra'
-        }
-    ];
-
-    res.json(celulares);
-})
-
-app.get('/jogos', (req, res) => {
-    const jogos = [
-        {
-            id: 1,
-            nome: 'Life is Strange'
-        },
-
-        {
-            id: 2, 
-            nome: 'Mobile Legends: Bang Bang'
-        }
-    ];
-
-    res.json(jogos);
-})
+});
 
 // inicia servidor
 app.listen(3000, () => {    
 
     console.log("Servidor rodando");
 
-})  
+})
