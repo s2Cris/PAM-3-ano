@@ -1,0 +1,99 @@
+<!-- Cristian Emanuel Marcheti & Maria Luiza Bonato - 3 D.S. -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro Usuários - Cristian Marcheti & Maria Luiza Bonato</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            align-items: center;
+        }
+
+        form{
+            width: 300px;
+        }
+
+        input{
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        button{
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        title{
+            align-items: center;
+            align-content: center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Cadastro Usuários - Cristian Marcheti & Maria Luiza Bonato</h1>
+
+    <form id="formCadastro">
+
+        <label>Nome</label>
+        <input type="text" id="nome" required>
+
+        <label>Idade</label>
+        <input type="number" id="idade" required>
+
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <label>Cidade</label>
+        <input type="text" id="cidade" required>
+
+        <button type="submit">Cadastrar</button>
+
+    </form>
+
+    <script>
+
+        const formulario = document.getElementById('formCadastro');
+
+        formulario.addEventListener('submit', async (e) => {
+
+            e.preventDefault();
+
+            const usuario = {
+                nome: document.getElementById('nome').value,
+                idade: document.getElementById('idade').value,
+                email: document.getElementById('email').value,
+                cidade: document.getElementById('cidade').value
+            };
+
+            const resposta = await fetch('/usuarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(usuario)
+            });
+
+            const dados = await resposta.json();
+
+            alert(dados.mensagem);
+
+            // Limpa o formulário após cadastrar
+            formulario.reset();
+
+        });
+
+    </script>
+
+</body>
+</html>

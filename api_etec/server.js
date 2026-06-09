@@ -4,9 +4,8 @@ const express = require('express');
 const mysql = require('mysql2');
 const app = express ();
 
-// app.use(cors());
-
 app.use(express.json());
+app.use(express.static('public'));
 
 const conexao = mysql.createConnection({
     host: 'localhost',
@@ -77,14 +76,15 @@ app.post('/usuarios', (req, res) => {
 
             if(erro){
                 console.log(erro);
-                return;
 
-                res.json({
-                    mensagem: 'Usuário cadastrado com sucesso'
-                });
+                return;
 
             }
             
+            res.json({
+                    mensagem: 'Usuário cadastrado com sucesso'
+                });
+
         }
 
     );
