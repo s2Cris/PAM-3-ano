@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator,  TextInput, TouchableOpacity, Alert  } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator,  TextInput, TouchableOpacity, Alert, Platform  } from 'react-native';
 
 export default function App() {
   const [usuarios, setUsuarios] = useState([]);
@@ -44,6 +44,36 @@ export default function App() {
     setEndereco('');
   };
 
+  const removerUsuario = (id) => {
+    if (Platform.OS === 'web') {
+      const confirmarExclusao = window.confirm('Deseja realmente excluir este usuário?');
+
+      if (confirmarExclusao) {
+        setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
+      }
+
+      return;
+    }
+
+    Alert.alert(
+      'Confirmação',
+      'Deseja realmente excluir este usuário?',
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          text: 'Excluir',
+          style: 'destructive',
+          onPress: () => {
+            setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Cristian & Maria Luiza</Text>
@@ -83,6 +113,12 @@ export default function App() {
               <Text style={styles.endereco}>
                 {item.address.street}, {item.address.suite} - {item.address.city}
               </Text>
+              <TouchableOpacity
+                style={styles.botaoRemover}
+                onPress={() => removerUsuario(item.id)}
+              >
+                <Text style={styles.textoBotaoRemover}>Remover</Text>
+              </TouchableOpacity>
             </View>
           )}
           style={styles.lista}
@@ -164,5 +200,16 @@ textoBotao: {
     fontSize: 14,
     color: '#666',
     marginTop: 4,
+  },
+  botaoRemover: {
+    backgroundColor: '#c0392b',
+    padding: 10,
+    borderRadius: 6,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  textoBotaoRemover: {
+    color: '#ffffff',
+    fontWeight: 'bold',
   },
 });
